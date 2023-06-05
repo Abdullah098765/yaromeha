@@ -1,0 +1,91 @@
+.room-contant {
+  height: 485px;
+  width: 50%;
+  position: absolute;
+  float: left;
+  /* padding-top: 20px; */
+  border-right: 1px solid rgba(22, 172, 159, 0.5);
+}
+.chat-items {
+  height: 485px;
+  width: 50%;
+  position: absolute;
+  left: 50%;
+  float: left;
+  /* padding-top: 20px; */
+  /* border-right: 1px solid rgba(22, 172, 159, 0.5); */
+}
+
+.room-footer {
+  height: auto;
+  width: 100%;
+  position: absolute;
+  bottom: 0%;
+  margin-right: auto;
+  float: left;
+  border-top: 1px solid rgba(22, 172, 159, 0.5);
+  border-bottom: 1px solid rgba(22, 172, 159, 0.5);
+}
+.member-row {
+  overflow-x: scroll;
+  flex-wrap: nowrap;
+  /* max-height: 74px; */
+}
+
+.room-member {
+  height: 132px;
+  width: 140px;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  backdrop-filter: blur(8px);
+  border-right: 1px solid rgba(22, 172, 159, 0.5);
+}
+.room-member:hover {
+  background: rgba(255, 255, 255, 0.1);
+
+  /* transform: rotate(10deg); */
+  transition: transform 500ms, background 500ms;
+}
+
+.room-memberImage {
+  margin-top: 15px;
+  height: 9.3vh;
+  width: 9.3vh;
+  border: 0px solid rgba(22, 172, 159, 0.5);
+  margin-bottom: 10px;
+  -webkit-transition: border 500ms;
+}
+.room-memberImage:hover {
+  border: 5px solid rgba(22, 172, 159, 0.5);
+
+  /* transform: rotate(10deg); */
+  transition: transform 500ms, border 500ms;
+}
+
+.room-contant-nav {
+  height: 60px;
+  width: 695px;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  border-bottom: 1px solid rgba(22, 172, 159, 0.5);
+}
+.control-buttons {
+  height: 60px;
+  width: 60px;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(22, 172, 159, 0.5);
+  font-size: larger;
+  color: rgb(28, 115, 144);
+  padding-top: 10px;
+}
+.control-buttons:hover {
+  background: rgba(255, 255, 255, 0.1);
+
+  /* transform: rotate(10deg); */
+  transition: transform 500ms, background 500ms;
+}
