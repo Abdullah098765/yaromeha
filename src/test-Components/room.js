@@ -84,7 +84,7 @@ const Room = () => {
 fetchGroupData();
 
     const socket = io('https://yaromeha-server-production.up.railway.app',{
-      query: { groupId, memberId: localStorage.getItem('uid') }
+      query: { groupId, memberId: localStorage.getItem('userUid') }
     });
 
 
