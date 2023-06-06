@@ -37,7 +37,7 @@ async function addMember(params) {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ groupId, userId: localStorage.getItem("uid") }),
+      body: JSON.stringify({ groupId, userId: localStorage.getItem("userUid") }),
     });
 
     const data = await response.json();
