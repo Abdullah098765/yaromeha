@@ -349,7 +349,7 @@ function GlassyApp() {
           // window.location = "https://yaromeha-app.web.app";
           console.log("loged in", JSON.parse(result)._id);
         })
-        .catch(error => console.log("error", error), alert("sign again"));
+        .catch(error => console.log("error", error));
     });
   }
   function signOutFunc() {
