@@ -30,7 +30,7 @@ const Sharing = ({ content }) => {
   );
 };
 
-async function addMember(params) {
+async function addMember({setAuthStatus}) {
   try {
     const response = await fetch("https://yaromeha-server-production.up.railway.app/add_member", {
       method: "POST",
@@ -51,6 +51,8 @@ async function addMember(params) {
     } else {
       // Handle any other response or error cases
       console.log("Unexpected response:", data);
+      setAuthStatus(data)
+      
     }
   } catch (error) {
     console.error("Error:", error);
@@ -62,12 +64,13 @@ const Room = () => {
 
 
   const [groupData, setGroupData] = useState({})
+  const [authStatus, setAuthStatus] = useState({})
 
  
   
 
   useEffect(()=>{
-  addMember()
+  addMember(setAuthStatus)
 
   const fetchGroupData = async () => {
     try {
@@ -99,6 +102,7 @@ socket.on(groupId,(e)=>{
   
   return (
     <div>
+      {authStatus.message!== '"You are already a member of another group. Please leave the current group before joining a new one."'?
       <div className="room-container">
         <Chat />
         {/* <div className="chat-container"> */}
@@ -120,7 +124,11 @@ socket.on(groupId,(e)=>{
 
         </div>
      </div>
+      </div>:
+      <div>
+        You are already a member of another group. Please leave the current group before joining a new one.
       </div>
+      }
     </div>
   );
 };
