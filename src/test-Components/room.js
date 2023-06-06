@@ -37,7 +37,7 @@ async function addMember(params) {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ groupId, userId: localStorage.getItem("userUid") }),
+      body: JSON.stringify({ groupId, userId: localStorage.getItem("uid") }),
     });
 
     const data = await response.json();
@@ -84,7 +84,7 @@ const Room = () => {
 fetchGroupData();
 
     const socket = io('https://yaromeha-server-production.up.railway.app',{
-      query: { groupId, memberId: localStorage.getItem('userUid') }
+      query: { groupId, memberId: localStorage.getItem('uid') }
     });
 
 

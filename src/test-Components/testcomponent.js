@@ -146,9 +146,7 @@ const GlassyCard = ({ group }) => {
             setShowModel(true);
           } else {
             console.log("Group joined");
-            window.open(
-              "https://yaromeha-jsw3.vercel.app/room?groupId=" + group._id
-            );
+            window.open("https://yaromeha-jsw3.vercel.app/room?groupId=" + group._id);
           }
         }}
       >
@@ -345,7 +343,6 @@ function GlassyApp() {
           console.log(JSON.parse(result));
           setShowModel(false);
           localStorage.setItem("uid", JSON.parse(result)._id);
-          localStorage.setItem("userUid", JSON.parse(result).uid);
           // window.location = "https://yaromeha-app.web.app";
           console.log("loged in", JSON.parse(result)._id);
         })
