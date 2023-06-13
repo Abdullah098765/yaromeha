@@ -39,7 +39,7 @@ function App() {
       redirect: "follow"
     };
 
-    fetch("http://localhost:5000/get_user", requestOptions)
+    fetch("https://yaromeha-server-production.up.railway.app/get_user", requestOptions)
       .then(response => response.text())
       .then(result => {
         console.log(JSON.parse(result));

@@ -193,7 +193,7 @@ const GroupCreationForm = ({ }) => {
         if (response.ok) {
           const data = await response.json();
           console.log(data.message, data.group);
-          window.open("http://localhost:3000/room?groupId=" + data.group._id);
+          window.open("https://yaromeha-jsw3.vercel.app/room?groupId=" + data.group._id);
 
         } else {
           const error = await response.json();
