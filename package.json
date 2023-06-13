@@ -10,6 +10,7 @@
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "firebase": "^9.22.1",
+    "peerjs": "^1.4.7",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-firebase-hooks": "^5.1.1",
@@ -18,7 +19,8 @@
     "react-router-dom": "^6.11.2",
     "react-scripts": "5.0.1",
     "socket.io-client": "^4.6.2",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "webrtc": "^1.14.1"
   },
   "scripts": {
     "start": "react-scripts start",

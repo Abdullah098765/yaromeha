@@ -19,7 +19,7 @@ const ParticipantsList = ({members}) => {
       {members &&
           members.map(member =>
 
-            <div className="participant-card">
+            <div className="participant-card" key={member._id}>
             <div
               onClick={() =>
                 setParticipantImage(

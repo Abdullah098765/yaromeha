@@ -7,6 +7,7 @@
   padding: 10px;
   background-color: #075e54;
   border: 1px solid rgba(22, 172, 159, 0.5);
+  cursor: not-allowed;
 }
 
 .control-btn {
@@ -15,7 +16,7 @@
   align-items: center;
   color: #fff;
   font-size: 12px;
-  cursor: pointer;
+  cursor: not-allowed; /* Set cursor to not-allowed when buttons are disabled */
   background: transparent;
   border: none;
   outline: none;
@@ -24,25 +25,65 @@
   padding: 10px;
   border-radius: 10px;
   transition: background-color 0.3s ease;
+  pointer-events: none; /* Disable pointer events on the buttons */
 }
-/* .selected-control-btn {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  color: #075e54;
-  font-size: 12px;
-  margin-left: 5px;
-  margin-right: 5px;  cursor: pointer;
-  background: transparent;
-  border: none;
-  outline: none;
-  background-color: #fff;
-  padding: 10px;
-  border-radius: 10px;
-  transition: background-color 0.3s ease;
-} */
 
 .control-btn:hover {
   background-color: #fff;
   color: #075e54;
+  cursor: pointer; /* Change cursor to pointer when hovering */
 }
+
+.control-btn:hover::after {
+  content: ""; /* Display the message when hovering */
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 10px;
+  background-color: #000;
+  color: #fff;
+  font-size: 12px;
+  border-radius: 5px;
+  visibility: hidden; /* Hide the message by default */
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.control-btn:hover:hover::after {
+  visibility: visible;
+  opacity: 1;
+}
+
+
+abbr {
+  position: relative;
+  text-decoration: none;
+}
+
+abbr::after {
+  content: attr(title);
+  position: absolute;
+  top: calc(100% + 5px);
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 5px;
+  background-color: #222;
+  color: #fff;
+  font-size: 12px;
+  border-radius: 4px;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s, visibility 0.3s;
+}
+
+abbr:hover::after {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Additional styles for the tooltip text */
+
+
+
+

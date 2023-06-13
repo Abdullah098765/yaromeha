@@ -47,7 +47,7 @@ const Modal = ({ sign_In_With_Google }) => {
   );
 };
 
-const GlassyNavbar = ({ signOutFunc }) => {
+const GlassyNavbar = ({ signOutFunc, user }) => {
   let { openDropDown, setOpenDropDown } = useContext(AppContext);
 
   const toggleDropdown = () => {
@@ -64,7 +64,7 @@ const GlassyNavbar = ({ signOutFunc }) => {
       </div>
       <div className="navbar-profile">
         <img
-          src="https://lh3.googleusercontent.com/a/AAcHTtfW0Qk8SdfUHAoWHcH9QBbaEXa3uUR7k_1C_BBHFA=s288-c-no"
+          src={user.photoURL}
           alt="Profile"
           className="profile-image"
           onClick={toggleDropdown}
@@ -156,7 +156,7 @@ const GlassyCard = ({ group }) => {
   );
 };
 
-const GroupCreationForm = ({}) => {
+const GroupCreationForm = ({ }) => {
   const auth = getAuth();
 
   const [isFormVisible, setIsFormVisible] = useState(false);
@@ -182,20 +182,19 @@ const GroupCreationForm = ({}) => {
       setIsFormVisible(false);
 
       try {
-        const response = await fetch(
-          "https://yaromeha-server-production.up.railway.app/create-group",
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json"
-            },
-            body: JSON.stringify(groupData)
-          }
-        );
+        const response = await fetch("https://yaromeha-server-production.up.railway.app/create-group", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(groupData)
+        });
 
         if (response.ok) {
           const data = await response.json();
           console.log(data.message, data.group);
+          window.open("http://localhost:3000/room?groupId=" + data.group._id);
+
         } else {
           const error = await response.json();
 
@@ -294,16 +293,42 @@ const Footer = () => {
 
 function GlassyApp() {
   const [allGroupsData, setAllGroupsData] = useState([]);
+  const [showLoading, setshowLoading] = useState(true);
+  let { setUser, user, } = useContext(AppContext);
+
   useEffect(() => {
     setInterval(() => {
       fetch("https://yaromeha-server-production.up.railway.app/get_groups")
         .then(response => response.text())
         .then(result => {
           setAllGroupsData(JSON.parse(result));
-          // console.log(allGroupsData);
+          // console.log(JSON.parse(result));
+          setshowLoading(false)
         })
         .catch(error => console.log("error", error));
-    }, 2000);
+    }, 200);
+  }, []);
+
+  useEffect(() => {
+    var myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+
+    var raw = JSON.stringify({ uid: localStorage.getItem("uid") });
+
+    var requestOptions = {
+      method: "POST",
+      headers: myHeaders,
+      body: raw,
+      redirect: "follow"
+    };
+
+    fetch("https://yaromeha-server-production.up.railway.app/get_user", requestOptions)
+      .then(response => response.text())
+      .then(result => {
+        console.log(JSON.parse(result));
+        setUser(JSON.parse(result))
+      })
+      .catch(error => console.log("error", error));
   }, []);
   const auth = getAuth();
   let { showModel, setShowModel, setOpenDropDown } = useContext(AppContext);
@@ -334,10 +359,7 @@ function GlassyApp() {
         redirect: "follow"
       };
 
-      fetch(
-        "https://yaromeha-server-production.up.railway.app/add_user",
-        requestOptions
-      )
+      fetch("https://yaromeha-server-production.up.railway.app/add_user", requestOptions)
         .then(response => response.text())
         .then(result => {
           console.log(JSON.parse(result));
@@ -367,10 +389,7 @@ function GlassyApp() {
           redirect: "follow"
         };
 
-        fetch(
-          "https://yaromeha-server-production.up.railway.app/remove_user",
-          requestOptions
-        )
+        fetch("https://yaromeha-server-production.up.railway.app/remove_user", requestOptions)
           .then(response => response.text())
           .then(result => {
             console.log("Logged out");
@@ -385,23 +404,31 @@ function GlassyApp() {
   }
 
   return (
+
     <div className="app">
+
       <GlassyNavbar
         sign_In_With_Google={sign_In_With_Google}
         signOutFunc={signOutFunc}
+        user={user}
       />
       <GroupCreationForm sign_In_With_Google={sign_In_With_Google} />
       <Modal sign_In_With_Google={sign_In_With_Google} />
 
-      <div className="container">
-        {allGroupsData &&
-          allGroupsData.map(group =>
-            <GlassyCard
-              group={group}
-              sign_In_With_Google={sign_In_With_Google}
-            />
-          )}
-      </div>
+      {!showLoading
+        ? <div className="container">
+          {allGroupsData &&
+            allGroupsData.map(group =>
+              <GlassyCard
+                group={group}
+                sign_In_With_Google={sign_In_With_Google}
+              />
+            )}
+        </div>
+        : <div className="loading-container">
+          <div className="loading-spinner" />
+        </div>}
+
       <Footer />
     </div>
   );

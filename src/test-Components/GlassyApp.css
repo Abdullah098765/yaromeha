@@ -455,3 +455,39 @@ hr {
 .close-button:hover {
   color: #ffcc00;
 }
+
+/* loading...  */
+
+.loading-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  height: 70vh;
+}
+
+.loading-spinner {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  border: 7px dotted rgba(22, 172, 159, 0.5);
+  /* box-shadow: inset 0 0 0 3000px rgba(150, 150, 150, 0.192); */
+
+
+  animation: spin 5s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.loading-text {
+  margin-top: 16px;
+  font-size: 18px;
+  color: #ffffff; /* Dark gray */
+}

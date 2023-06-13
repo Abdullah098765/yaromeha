@@ -43,7 +43,9 @@
 
 .content-video {
   height: 417px;
+  width: 827px;
   margin-bottom: 11%;
+  background: black;
   top: 0;
   left: 0;
 bottom: 50%;
@@ -82,4 +84,72 @@ height: 250px;
   filter: brightness(100%);
   box-shadow: 0 0 10px rgba(7, 94, 84, 0.8);
   transition: box-shadow 0.3s ease-in-out;
+}
+
+/* Error */
+
+.error-message {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  margin: 50px;
+  padding: 50px;
+  /* background-color:  #F8F8F8; */
+  border: 1px solid rgba(22, 172, 159, 0.5);
+  box-shadow: inset 0 0 0 3000px rgba(150, 150, 150, 0.192);
+}
+
+.error-icon {
+  margin-right: 10px;
+  color: #FF0000;
+}
+
+.error-title {
+  font-size: 24px;
+  margin-bottom: 10px;
+  color: #FF0000; /* Update with your theme's text color */
+}
+
+.error-description {
+  font-size: 16px;
+  color: #f3eded;  /* Update with your theme's text color */
+}
+.error-content{
+display: contents;
+}
+/* loadong */
+
+.loading-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.loading-spinner {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  border: 7px dotted rgba(22, 172, 159, 0.5);
+  /* box-shadow: inset 0 0 0 3000px rgba(150, 150, 150, 0.192); */
+
+
+  animation: spin 5s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.loading-text {
+  margin-top: 16px;
+  font-size: 18px;
+  color: #ffffff; /* Dark gray */
 }

@@ -3,7 +3,7 @@ import { useState, createContext } from "react";
 export const AppContext = createContext({});
 
 export const AppProvider = ({ children }) => {
-  const [user, setUser] = useState();
+  const [user, setUser] = useState({});
   const [openDropDown, setOpenDropDown] = useState(false);
   const [adsList, setAdsList] = useState("");
   const [edit_ad, setEdit_ad] = useState({});
@@ -11,6 +11,10 @@ export const AppProvider = ({ children }) => {
   const [searchValue, setSearchValue] = useState("");
   const [participantImage, setParticipantImage] = useState("");
   const [showModel, setShowModel] = useState(null);
+  const [myPeer, setMyPeer] = useState(null);
+  const [audioActive, setAudioActive] = useState(false)
+  const [stream, setStream,] = useState(null);
+
 
   function getUser(params) {
     return user;
@@ -55,7 +59,10 @@ export const AppProvider = ({ children }) => {
         setParticipantImage,
         showModel,
         setShowModel,
-        getShowModel
+        getShowModel,
+        myPeer, setMyPeer,
+        audioActive, setAudioActive,
+        stream, setStream,
       }}
     >
       {children}

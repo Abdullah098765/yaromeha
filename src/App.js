@@ -12,6 +12,7 @@ import {
 } from "react-google-one-tap-login";
 import Create_room from "./components/create_room/create_room.js";
 import GlassyDesign from "./test-Components/testcomponent.js";
+import { io } from "socket.io-client";
 
 function App() {
   const app = initializeApp({
@@ -25,7 +26,27 @@ function App() {
   });
   const analytics = getAnalytics(app);
   let { setUser, user, openDropDown, setOpenDropDown } = useContext(AppContext);
+  useEffect(() => {
+    var myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
 
+    var raw = JSON.stringify({ uid: localStorage.getItem("uid") });
+
+    var requestOptions = {
+      method: "POST",
+      headers: myHeaders,
+      body: raw,
+      redirect: "follow"
+    };
+
+    fetch("http://localhost:5000/get_user", requestOptions)
+      .then(response => response.text())
+      .then(result => {
+        console.log(JSON.parse(result));
+        setUser(JSON.parse(result))
+      })
+      .catch(error => console.log("error", error));
+  }, []);
   // useGoogleOneTapLogin({
   //   onError: error => console.log(error),
   //   onSuccess: response => {
@@ -88,7 +109,7 @@ function App() {
   return (
     <div style={{ margin: 0 + "px", padding: 0 + "px" }}>
       <Routes>
-        <Route path="/" element={<GlassyDesign />} />
+        <Route path="/" element={<GlassyDesign user= {user} />} />
 
         <Route path="room" element={<Room />} />
         {/* <Route path="/" element={<Home />} /> */}
