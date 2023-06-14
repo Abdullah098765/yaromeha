@@ -95,6 +95,10 @@ hr {
   border-radius: 8px;
   transition: background-color 0.3s;
 }
+.login{
+color: #fff;
+cursor: not-allowed;
+}
 
 .dropdown-menu a:hover {
   background-color: rgba(255, 255, 255, 0.2);
@@ -326,6 +330,8 @@ hr {
   padding: 20px;
   color: #ffffff;
   padding: 20px;
+  margin-top: 58%;
+
 }
 
 .footer-content {

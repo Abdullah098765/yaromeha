@@ -1,4 +1,7 @@
 import React, { useState, useContext, useEffect } from "react";
+import { ethers } from 'ethers';
+import { providers } from 'ethers';
+
 import "./GlassyApp.css";
 import {
   FaUser,
@@ -21,7 +24,7 @@ import {
 import { faL } from "@fortawesome/free-solid-svg-icons";
 import { useAuthState } from "react-firebase-hooks/auth";
 
-const Modal = ({ sign_In_With_Google }) => {
+const Modal = ({ sign_In_With_Google, connectWithMetaMask }) => {
   let { showModel, setShowModel } = useContext(AppContext);
   return (
     <div className={` ${!showModel ? "modal-closed" : "modal-overlay"}`}>
@@ -33,10 +36,16 @@ const Modal = ({ sign_In_With_Google }) => {
               <i className="fab fa-google" />
               <span>Sign in with Google</span>
             </div>
-            <div className="option">
-              <i className="fas fa-user-secret" />
-              <span>Continue as a Stranger</span>
+            <div className="option" onClick={() => {
+              connectWithMetaMask()
+
+
+
+            }}>
+              <img src={'https://raw.githubusercontent.com/MetaMask/metamask-extension/f77b1f65e249a901b8c3339e4fd21d6d043b4e65/app/images/logo/metamask-fox.svg'} alt="MetaMask Logo" className="metamask-icon" />
+              <span>Continue with MetaMask</span>
             </div>
+
           </div>
           <button className="close-button" onClick={() => setShowModel(false)}>
             Close
@@ -46,6 +55,11 @@ const Modal = ({ sign_In_With_Google }) => {
     </div>
   );
 };
+
+
+
+
+
 
 const GlassyNavbar = ({ signOutFunc, user }) => {
   let { openDropDown, setOpenDropDown } = useContext(AppContext);
@@ -62,7 +76,7 @@ const GlassyNavbar = ({ signOutFunc, user }) => {
       <div className="navbar-brand">
         <h1>Yaromeha App</h1>
       </div>
-      <div className="navbar-profile">
+      {user.photoURL ? <div className="navbar-profile">
         <img
           src={user.photoURL}
           alt="Profile"
@@ -111,7 +125,7 @@ const GlassyNavbar = ({ signOutFunc, user }) => {
             </li>
           </ul>
         </div>
-      </div>
+      </div> :<abbr title="Disable right now"> <span  className="login" >SignIn</span></abbr>}
     </nav>
   );
 };
@@ -295,6 +309,31 @@ function GlassyApp() {
   const [allGroupsData, setAllGroupsData] = useState([]);
   const [showLoading, setshowLoading] = useState(true);
   let { setUser, user, } = useContext(AppContext);
+  const [isConnected, setIsConnected] = useState(false);
+
+  useEffect(() => {
+
+    // Check if user is already connected to MetaMask
+    const checkConnection = async () => {
+      try {
+        // Check if MetaMask is installed
+        if (window.ethereum) {
+          // Request user's accounts
+          const accounts = await window.ethereum.request({ method: 'eth_accounts' });
+          console.log(accounts);
+
+          // Update state based on connection status
+          setIsConnected(accounts.length > 0);
+        }
+      } catch (error) {
+        console.error('Error checking MetaMask connection:', error);
+      }
+    };
+
+    checkConnection();
+
+  }, []);
+
 
   useEffect(() => {
     setInterval(() => {
@@ -330,6 +369,32 @@ function GlassyApp() {
       })
       .catch(error => console.log("error", error));
   }, []);
+
+
+
+  const connectWithMetaMask = async () => {
+
+
+    try {
+      // Check if MetaMask is installed
+      if (window.ethereum) {
+        const account = await window.ethereum.request({ method: 'eth_requestAccounts' });
+        console.log(account);
+
+        setIsConnected(true);
+
+
+
+      } else {
+        // MetaMask is not installed or not available
+        console.log('Please install MetaMask extension to connect.');
+      }
+    } catch (error) {
+      // Handle error connecting with MetaMask
+      console.error('Error connecting with MetaMask:', error);
+    }
+  };
+
   const auth = getAuth();
   let { showModel, setShowModel, setOpenDropDown } = useContext(AppContext);
 
@@ -413,7 +478,7 @@ function GlassyApp() {
         user={user}
       />
       <GroupCreationForm sign_In_With_Google={sign_In_With_Google} />
-      <Modal sign_In_With_Google={sign_In_With_Google} />
+      <Modal sign_In_With_Google={sign_In_With_Google} connectWithMetaMask={connectWithMetaMask} />
 
       {!showLoading
         ? <div className="container">
