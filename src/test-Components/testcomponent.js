@@ -195,7 +195,9 @@ const GroupCreationForm = ({ }) => {
     } else {
       e.preventDefault();
       setIsFormVisible(false);
-      groupData.ownerId = localStorage.getItem("uid")
+      let a = groupData
+      a.ownerId = localStorage.getItem("uid")
+      setGroupData(a)
       try {
         const response = await fetch("https://yaromeha-server-production.up.railway.app/create-group", {
           method: "POST",
