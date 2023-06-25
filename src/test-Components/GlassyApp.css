@@ -97,7 +97,7 @@ hr {
 }
 .login{
 color: #fff;
-cursor: not-allowed;
+cursor: pointer;
 }
 
 .dropdown-menu a:hover {

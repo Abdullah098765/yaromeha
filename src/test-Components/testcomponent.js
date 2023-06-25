@@ -61,8 +61,9 @@ const Modal = ({ sign_In_With_Google, connectWithMetaMask }) => {
 
 
 
-const GlassyNavbar = ({ signOutFunc, user }) => {
+const GlassyNavbar = ({ signOutFunc, user, sign_In_With_Google }) => {
   let { openDropDown, setOpenDropDown } = useContext(AppContext);
+  let { showModel, setShowModel } = useContext(AppContext);
 
   const toggleDropdown = () => {
     setOpenDropDown(!openDropDown);
@@ -76,9 +77,9 @@ const GlassyNavbar = ({ signOutFunc, user }) => {
       <div className="navbar-brand">
         <h1>Yaromeha App</h1>
       </div>
-      {user.photoURL ? <div className="navbar-profile">
+      {window.localStorage.photoURL ? <div className="navbar-profile">
         <img
-          src={user.photoURL}
+          src={window.localStorage.photoURL}
           alt="Profile"
           className="profile-image"
           onClick={toggleDropdown}
@@ -125,7 +126,7 @@ const GlassyNavbar = ({ signOutFunc, user }) => {
             </li>
           </ul>
         </div>
-      </div> :<abbr title="Disable right now"> <span  className="login" >SignIn</span></abbr>}
+      </div> : <span className="login" onClick={() => setShowModel(true)} >Sign In</span>}
     </nav>
   );
 };
@@ -153,7 +154,7 @@ const GlassyCard = ({ group }) => {
             />
           )}
       </div>
-      <button
+      {group._id !== '6489e86efa3ecd991b5f6a65' && <button
         className="card-button"
         onClick={() => {
           if (localStorage.getItem("uid") === null) {
@@ -165,7 +166,7 @@ const GlassyCard = ({ group }) => {
         }}
       >
         Join Group
-      </button>
+      </button>}
     </div>
   );
 };
@@ -430,6 +431,7 @@ function GlassyApp() {
           console.log(JSON.parse(result));
           setShowModel(false);
           localStorage.setItem("uid", JSON.parse(result)._id);
+          localStorage.setItem("photoURL", JSON.parse(result).photoURL);
           // window.location = "https://yaromeha-app.web.app";
           console.log("loged in", JSON.parse(result)._id);
         })
@@ -460,6 +462,7 @@ function GlassyApp() {
             console.log("Logged out");
             setOpenDropDown(false);
             localStorage.removeItem("uid");
+            localStorage.removeItem("photoURL");
           })
           .catch(error => console.log("error", error));
       })

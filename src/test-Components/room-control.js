@@ -13,7 +13,7 @@ const RoomControls = ({ streamSocket, handleMicToggle }) => {
 
 
   return (
-    <abbr title="More options will be enabled when our application reaches one million traffic">
+    <abbr title="More options will be enabled soon">
 
     <div className="room-controls">
         <button className="control-btn" onClick={() => {
@@ -23,7 +23,7 @@ const RoomControls = ({ streamSocket, handleMicToggle }) => {
           <span>{audioActive ? 'Mic On' : 'Mice Off'}</span>
         </button>
 
-        <button className="control-btn" title="More options will be enabled when our application reaches one million traffic">
+        <button className="control-btn" title="More options will be enabled soon">
           <i className="fas fa-microphone"></i>
           <span>Audio On/Off</span>
         </button>

@@ -17,7 +17,7 @@ const groupId = strs.at(-1)
 
 
 
-async function addMember(setAuthStatus) {
+async function addMember(setAuthStatus, setShowLoading) {
   try {
     const response = await fetch("https://yaromeha-server-production.up.railway.app/add_member", {
       method: "POST",
@@ -35,6 +35,8 @@ async function addMember(setAuthStatus) {
     } else if (data.message === "User has been added as a member of the group") {
       // User has been added as a member, handle accordingly
       console.log("User has been added as a member of the group");
+      setShowLoading(false)
+
     } else {
       // Handle any other response or error cases
       console.log("Unexpected response:", data);
@@ -53,6 +55,7 @@ const Room = () => {
   const [groupData, setGroupData] = useState({})
   const [authStatus, setAuthStatus] = useState({})
   const [allCalls, setAllCalls] = useState([])
+  const [showLoading, setShowLoading] = useState(true)
   const peerRef = useRef(null);
 
 
@@ -71,7 +74,7 @@ const Room = () => {
   useEffect(() => {
 
 
-    addMember(setAuthStatus)
+    addMember(setAuthStatus, setShowLoading)
 
     socket.on(localStorage.getItem('uid'), (e) => {
       setUser(e)
@@ -283,7 +286,7 @@ const Room = () => {
     </div>
     );
   };
-
+  console.log(groupData.groupName);
   return (
     <div>
 
@@ -293,8 +296,8 @@ const Room = () => {
 
           <div className="room0">
             <div className="roomControls-ParticipantsList">
-                <RoomControls streamSocket={streamSocket} handleMicToggle={handleMicToggle} />
-           
+              <RoomControls streamSocket={streamSocket} handleMicToggle={handleMicToggle} />
+
 
               <Sharing streamSocket={streamSocket} />
 
@@ -318,10 +321,11 @@ const Room = () => {
           </div>
         </div>
       }
-      {user.currentGroup !== undefined || authStatus.message === "You are already a member of another group. Please leave the current group before joining a new one." && groupId === user.currentGroup && <div className="loading-container">
-        <div className="loading-spinner"></div>
-        <div className="loading-text">Starting...</div>
-      </div>}
+      {showLoading &&
+        <div className="loading-container">
+          <div className="loading-spinner"></div>
+          <div className="loading-text">Starting...</div>
+        </div>}
 
 
     </div>
