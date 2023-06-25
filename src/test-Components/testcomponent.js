@@ -216,6 +216,7 @@ const GroupCreationForm = ({ }) => {
           console.log(error.error);
         }
       } catch (error) {
+        
         console.error("Error:", error);
       }
     }
